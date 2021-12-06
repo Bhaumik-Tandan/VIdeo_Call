@@ -150,3 +150,19 @@ answerButton.onclick = async () => {
     });
   });
 };
+
+hangupButton.onclick = async () => {
+  const callId = callInput.value;
+  const callDoc = firestore.collection('calls').doc(callId);
+
+  await callDoc.delete();
+
+  pc.close();
+  pc.onicecandidate = null;
+  pc.ontrack = null;
+
+  hangupButton.disabled = true;
+  callButton.disabled = false;
+  answerButton.disabled = false;
+  webcamButton.disabled = false;
+}
